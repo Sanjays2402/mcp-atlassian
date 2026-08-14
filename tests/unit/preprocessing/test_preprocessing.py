@@ -1419,6 +1419,15 @@ class TestPanelBlocks:
         result = preprocessor.jira_to_markdown("[https://example.com] more text")
         assert "https://example.com" in result, f"URL dropped: {result}"
 
+    def test_non_link_brackets_are_preserved(self, preprocessor):
+        """Only URL-shaped bracketed text is unwrapped as a bare link."""
+        result = preprocessor.jira_to_markdown(
+            "Emailed [~jdoe]; engagements ([eBay]); [https://example.com]"
+        )
+        assert "[~jdoe]" in result
+        assert "[eBay]" in result
+        assert "https://example.com" in result
+
 
 # Code block placeholder protection tests
 

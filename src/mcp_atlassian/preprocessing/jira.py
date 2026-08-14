@@ -352,7 +352,11 @@ class JiraPreprocessor(BasePreprocessor):
 
         # Links
         output = re.sub(r"\[([^|]+)\|(.+?)\]", r"[\1](\2)", output)
-        output = re.sub(r"\[(.+?)\]([^\(])", r"\1\2", output)
+        output = re.sub(
+            r"\[((?:[A-Za-z][A-Za-z0-9+.-]*:|www\.)[^\]|]+)\]([^\(])",
+            r"\1\2",
+            output,
+        )
 
         # Colored text
         output = re.sub(
